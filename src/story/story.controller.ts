@@ -1,0 +1,10 @@
+import { Controller } from '@nestjs/common';
+
+import { StoryService } from './story.service';
+
+@Controller('story')
+export class StoryController {
+  constructor(
+    public storyService: StoryService,
+  ) {}
+}
