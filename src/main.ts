@@ -1,10 +1,11 @@
-import { AbstractHttpAdapter, NestApplication, NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AbstractHttpAdapter, NestFactory } from '@nestjs/core';
 import { INestApplication } from '@nestjs/common';
-import { create } from 'domain';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import { AppModule } from './app.module';
 
 export async function createApp(httpAdapter?: AbstractHttpAdapter): Promise<INestApplication> {
-  let app: NestApplication;
+  let app: INestApplication;
 
   if (httpAdapter) {
     app = await NestFactory.create(AppModule, httpAdapter);
@@ -12,7 +13,18 @@ export async function createApp(httpAdapter?: AbstractHttpAdapter): Promise<INes
     app = await NestFactory.create(AppModule);
   }
 
-  app.setGlobalPrefix('api/v1');
+  const endpointPrefix = 'api/v1';
+
+  app.setGlobalPrefix(endpointPrefix);
+
+  const options = new DocumentBuilder()
+    .setTitle('Scrum Poker Planning')
+    .setDescription('Scrum Poker Planning API Documentation')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+
+  SwaggerModule.setup('documentation', app, document);
 
   return app;
 }
