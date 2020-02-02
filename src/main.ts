@@ -12,6 +12,8 @@ export async function createApp(httpAdapter?: AbstractHttpAdapter): Promise<INes
     app = await NestFactory.create(AppModule);
   }
 
+  app.setGlobalPrefix('api/v1');
+
   return app;
 }
 
