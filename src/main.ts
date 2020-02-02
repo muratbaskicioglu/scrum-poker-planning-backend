@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
+import { ConfigService } from './config/config.service';
 
 export async function createApp(httpAdapter?: AbstractHttpAdapter): Promise<INestApplication> {
   let app: INestApplication;
@@ -31,6 +32,7 @@ export async function createApp(httpAdapter?: AbstractHttpAdapter): Promise<INes
 
 async function bootstrap() {
   const app = await createApp();
-  await app.listen(5454);
+  const { serverConfig: { port } } = app.get<ConfigService>(ConfigService);
+  await app.listen(port);
 }
 bootstrap();

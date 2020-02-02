@@ -8,7 +8,7 @@ import { ProcessEnvReader } from './process.env-reader';
   providers: [
     {
       provide: EnvReader,
-      useClass: process.env.NODE_ENV === 'production' ?
+      useClass: process.env.NODE_ENV === 'prod' ?
         ProcessEnvReader :
         DotenvEnvReader,
     },
