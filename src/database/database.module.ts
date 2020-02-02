@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 
+import { PostgresTypeOrmDatabase } from './postgres-type-orm.database';
+
 @Module({
-  imports: [],
+  imports: [new PostgresTypeOrmDatabase().register()],
   providers: [],
   exports: [],
 })
